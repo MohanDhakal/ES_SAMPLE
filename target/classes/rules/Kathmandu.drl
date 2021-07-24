@@ -1,0 +1,29 @@
+// created on: July 21, 2021
+
+package com.sample
+
+// list any import classes here.
+
+import com.sample.ItemCity;
+import java.math.BigDecimal;
+
+// declare any global variables here
+
+dialect "java"
+rule "Kathmandu Medicine Item"
+   when
+      item : ItemCity (purchaseCity == ItemCity.City.Kathmandu,
+         typeofItem == ItemCity.Type.Medicines)
+   then
+      BigDecimal tax = new BigDecimal(1.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice()));
+end
+
+rule "Kathmandu Groceries Item"
+   when
+      item : ItemCity(purchaseCity == ItemCity.City.Kathmandu,
+         typeofItem == ItemCity.Type.Grocery)
+   then
+      BigDecimal tax = new BigDecimal(2.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice()));
+end
